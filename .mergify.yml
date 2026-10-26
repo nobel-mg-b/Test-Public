@@ -1,0 +1,22 @@
+queue_rules:
+  - name: default
+    queue_conditions:
+      - base = main
+    merge_conditions: []
+    merge_method: squash
+
+pull_request_rules:
+  - name: canary comment
+    conditions:
+      - base = main
+      - label = canary
+    actions:
+      comment:
+        message: "CANARY rule fired for #{{ number }} by {{ author }}"
+  - name: queue on label
+    conditions:
+      - base = main
+      - label = queue
+    actions:
+      queue:
+        name: default
